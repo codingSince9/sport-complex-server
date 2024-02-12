@@ -20,7 +20,7 @@ The goals of the project include:
 - Class management: Allows administrators to create, update, and delete sports classes.
 - User management: Provides functionality for administrators to manage users and functionality for users to register and login.
 - Authentication: Implements authentication based on a JWT token to ensure secure access to the system.
-- Authorization: Enforces role based acces control to restrict certain actions.
+- Authorization: Enforces role based access control to restrict certain actions.
 - API endpoints: Defines API endpoints for interacting with the backend service.
 - Database integration: Integrates with a MongoDB database to store and retrieve data.
 - Error handling: Implements error handling mechanisms to provide meaningful error messages to users.
@@ -57,7 +57,7 @@ JWT_SECRET=<YOUR_JWT_SECRET>
 JWT_EXPIRES=<YOUR_TIME_UNTIL_TOKEN_EXPIRATION>
 ```
 
-Repeat the procces if you want to execute unit tests and replace the MONGO_TEST_DATABASE_URI connection string
+Repeat the proccess if you want to execute unit tests and replace the MONGO_TEST_DATABASE_URI connection string
 
 ## Running the application
 
@@ -76,9 +76,9 @@ All of the methods and objects required to run the methods successfully are desc
 - If you want to register a "ADMIN" user you need to provide the email with the "@victorious" domain since the complex management is believed to have their own work e-mail account.
 - Other users will by default have a "USER" role which can be changed by a "ADMIN" user.
 
--When registering a user, password must be provided two times for confirmation.
+- When registering a user, password must be provided two times for confirmation.
 
--Users can then view all classes, filter classes by their name, view details and apply to a specific sports class.
+- Users can then view all classes, filter classes by their name, view details and apply to a specific sports class.
 
 - Administrators can view and edit information of all users.
 - Only administrators can create, update and delete a sport, role or a sports class.

@@ -6,15 +6,18 @@ import {
   registerDecorator,
 } from 'class-validator';
 import { UserService } from '../../user/user.service';
+import { User } from 'src/user/schemas/user.schema';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
 
 @ValidatorConstraint({ name: 'studentValidator' })
 @Injectable()
 export class StudentValidator implements ValidatorConstraintInterface {
-  constructor(private readonly userService: UserService) {}
+  constructor(@InjectModel('User') private userModel: Model<User>) {}
 
   async validate(value: string): Promise<boolean> {
-    const allUsers = await this.userService.findAll();
-    return allUsers.some((user: any) => user._id === value);
+    const student = await this.userModel.findById(value);
+    return student ? true : false;
   }
 
   defaultMessage(): string {

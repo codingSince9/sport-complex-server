@@ -50,7 +50,7 @@ export class AuthService {
     const { email, password } = loginDto;
     const user = await this.userService.findOne(email);
     if (!user) {
-      throw new UnauthorizedException('123Invalid email or password.');
+      throw new UnauthorizedException('Invalid email or password.');
     }
 
     const passwordCheck = await bcrypt.compare(password, user.password);

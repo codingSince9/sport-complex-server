@@ -80,7 +80,12 @@ export class SportsClassController {
   async updateSportsClass(
     @Param('id') id: string,
     @Body() sportsClassDto: SportsClassDto,
-  ): Promise<SportsClass> {
+  ): Promise<
+    | SportsClass
+    | ClassDoesNotExistException
+    | DeadlineReachedException
+    | AlreadyAppliedException
+  > {
     return this.sportsClassService.update(id, sportsClassDto);
   }
 
@@ -96,28 +101,13 @@ export class SportsClassController {
   async applyToSportsClass(
     @Param('id') id: string,
     @Request() req,
-  ): Promise<SportsClass | AlreadyAppliedException> {
-    const sportsClass = (await this.sportsClassService.findById(
-      id,
-    )) as SportsClassDto;
-    if (!sportsClass) {
-      return new ClassDoesNotExistException();
-    }
-
-    const applicationDeadline = `${sportsClass.applicationDeadline} ${sportsClass.startTime}`;
-    const dateObject = new Date();
-    const currentTime = `${dateObject.toLocaleDateString()} ${dateObject.getHours()}:${dateObject.getMinutes()}`;
-    const studentId = req.user.id;
-    const userAlreadyApplied = sportsClass.students.includes(studentId);
-
-    if (Date.parse(currentTime) >= Date.parse(applicationDeadline)) {
-      return new DeadlineReachedException();
-    } else if (userAlreadyApplied) {
-      return new AlreadyAppliedException();
-    } else {
-      sportsClass.students.push(studentId);
-      return this.sportsClassService.update(id, sportsClass);
-    }
+  ): Promise<
+    | SportsClass
+    | ClassDoesNotExistException
+    | DeadlineReachedException
+    | AlreadyAppliedException
+  > {
+    return this.sportsClassService.update(id, null, req.user.id);
   }
 
   @ApiBearerAuth()
